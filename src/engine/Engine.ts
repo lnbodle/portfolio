@@ -3,6 +3,7 @@ import EntityManager from './EntityManager';
 import Input from './Input';
 import Physics from './Physics';
 import CannonDebugger from 'cannon-es-debugger';
+import Stats from 'stats.js';
 
 export default class Engine {
 
@@ -11,6 +12,7 @@ export default class Engine {
     physics: Physics
     physicsDebugger: any
     entityManager: EntityManager
+    stats: Stats
 
     constructor(_canvasParent: HTMLDivElement, _joystick: HTMLElement) {
 
@@ -19,18 +21,34 @@ export default class Engine {
         this.physics = new Physics();
         this.entityManager = new EntityManager();
 
-        this.physicsDebugger = CannonDebugger(this.display.scene, this.physics.world,{})
+        this.physicsDebugger = CannonDebugger(this.display.scene, this.physics.world, {})
+
+        //TODO : Maybe create a class, may not be neccesary
+        this.stats = new Stats();
+        this.initStats();
 
         this.update = this.update.bind(this);
         this.update();
+
+       
+    }
+
+    initStats() {
+        this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+        document.body.appendChild(this.stats.dom);
     }
 
     update() {
 
+        this.stats.begin();
+
         this.entityManager.update();
         this.physics.update();
         this.physicsDebugger.update();
-        requestAnimationFrame(this.update);
         this.display.render();
+
+        this.stats.end();
+
+        requestAnimationFrame(this.update);
     }
 }

@@ -25,8 +25,8 @@ export default class Display {
         this.camera.lookAt(0,0,0);
 
         //TODO : don't do this
-        /*const axesHelper = new THREE.AxesHelper( 5 );
-        this.scene.add( axesHelper );*/
+        const axesHelper = new THREE.AxesHelper( 5 );
+        this.scene.add( axesHelper );
     }
 
     render() {
