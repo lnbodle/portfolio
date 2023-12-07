@@ -1,20 +1,18 @@
-import * as THREE from 'three';
 import Component from "../Component"
 import Entity from "../Entity";
-import { VirtualJoystick } from '../Input';
-import PositionComponent from './PositionComponent';
+import BodyComponent from "./BodyComponent";
+
 
 export default class JoystickMouvementComponent extends Component {
 
-
-    positionComponent: PositionComponent
+    bodyComponent: BodyComponent
 
     constructor(_parent: Entity,
-        _positionComponent: PositionComponent,
+        _positionComponent: BodyComponent,
     ) {
         super(_parent)
 
-        this.positionComponent = _positionComponent
+        this.bodyComponent = _positionComponent
     }
 
     update(): void {
@@ -23,7 +21,7 @@ export default class JoystickMouvementComponent extends Component {
 
         let radian = joystick.getRadian();
         let force = joystick.getForce();
-        this.positionComponent.position.x += Math.cos(radian) * force / 100;
-        this.positionComponent.position.z -= Math.sin(radian) * force / 100;
+        this.bodyComponent.body.position.x += Math.cos(radian) * force / 100;
+        this.bodyComponent.body.position.z -= Math.sin(radian) * force / 100;
     }
 }

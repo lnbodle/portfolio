@@ -1,7 +1,6 @@
-import Game from "./engine/Game.ts"
-
 import Engine from "./engine/Engine.ts";
 import Player from "./engine/entities/Player.ts";
+import Test from "./engine/entities/Test.ts";
 
 export function setupGame(element: HTMLDivElement, joystick: HTMLElement) {
     
@@ -9,6 +8,7 @@ export function setupGame(element: HTMLDivElement, joystick: HTMLElement) {
 
     engine.entityManager.addEntity(new Player(engine));
 
-    console.log("just for test")
+    let test = new Test(engine);
+    engine.entityManager.addEntity(test);
 }
   

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+
 export default class Display {
 
     canvasParent: HTMLElement
@@ -20,6 +21,12 @@ export default class Display {
         this.onWindowResize();
 
         this.camera.position.z = 5;
+        this.camera.position.y = 5
+        this.camera.lookAt(0,0,0);
+
+        //TODO : don't do this
+        /*const axesHelper = new THREE.AxesHelper( 5 );
+        this.scene.add( axesHelper );*/
     }
 
     render() {
