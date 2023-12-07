@@ -7,7 +7,7 @@ import TestLight from './entities/TestLight';
 export default class Game {
 
     scene: THREE.Scene
-    camera: THREE.Camera
+    camera: THREE.PerspectiveCamera
     renderer: THREE.WebGLRenderer
     element: HTMLDivElement
     joystick: HTMLElement
@@ -31,13 +31,13 @@ export default class Game {
         this.init();
         this.update = this.update.bind(this)
         this.update()
+
+        this.onWindowResize();
+        
     }
 
     init() {
         this.camera.position.z = 10;
-        //this.camera.position.y = 10
-        //this.camera.rotateX(-0.6)
-
         this.entities.push(new Player(this));
         this.entities.push(new TestLight(this));
         this.entities.push(new Terrain(this));
@@ -51,5 +51,15 @@ export default class Game {
 
         requestAnimationFrame( this.update );
         this.renderer.render( this.scene, this.camera);
+    }
+
+    onWindowResize(){
+
+        let self = this;
+        window.addEventListener( 'resize', () => {
+            self.camera.aspect = window.innerWidth / window.innerHeight;
+            self.camera.updateProjectionMatrix();
+            self.renderer.setSize( window.innerWidth, window.innerHeight );
+        }, false );
     }
 }

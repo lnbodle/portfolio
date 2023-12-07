@@ -22,6 +22,6 @@ export default class Terrain extends Entity  {
     }
 
     update() {
-        console.log(this)
+       // console.log(this)
     }
 }
