@@ -1,8 +1,10 @@
 import * as THREE from 'three';
 import Player from "./entities/Player"
+import PlayerTest from "./entities/PlayerTest"
 import Entity from './Entity';
 import Terrain from './entities/Terrain';
 import TestLight from './entities/TestLight';
+import * as CANNON from 'cannon-es'
 
 export default class Game {
 
@@ -11,8 +13,9 @@ export default class Game {
     renderer: THREE.WebGLRenderer
     element: HTMLDivElement
     joystick: HTMLElement
-
     entities: Array<Entity>
+    world: CANNON.World
+    axesHelper:THREE.AxesHelper
 
     constructor(_element: HTMLDivElement, _joystick: HTMLElement) {
 
@@ -28,22 +31,42 @@ export default class Game {
 
         this.entities = new Array<Entity>;
 
+        this.world = new CANNON.World({gravity: new CANNON.Vec3(0,-9.82,0)});
+        let ground = new CANNON.Body({
+            type: CANNON.Body.STATIC,
+            shape: new CANNON.Plane()
+        })
+        ground.quaternion.setFromEuler( - Math.PI / 2, 0, 0)
+        this.world.addBody(ground); 
+           
+
         this.init();
         this.update = this.update.bind(this)
         this.update()
 
         this.onWindowResize();
+
+        this.axesHelper = new THREE.AxesHelper( 5 );
+        this.scene.add( this.axesHelper );
         
     }
 
     init() {
         this.camera.position.z = 10;
+        this.camera.position.y = 5;
+        //this.camera.position.y = -10;
+        //this.camera.rotateZ(Math.PI);
+
+       
         this.entities.push(new Player(this));
-        this.entities.push(new TestLight(this));
-        this.entities.push(new Terrain(this));
+        //this.entities.push(new PlayerTest(this));
+        //this.entities.push(new TestLight(this));
+        this.entities.push(new Terrain(this)); 
     }
 
     update() {
+
+        //this.camera.lookAt(new THREE.Vector3(0,0,0))
 
         for (let i = 0 ; i < this.entities.length ; i++) {
             this.entities[i].update();

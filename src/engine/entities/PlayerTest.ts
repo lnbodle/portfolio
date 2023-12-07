@@ -3,7 +3,7 @@ import Game from "../Game"
 import Entity from '../Entity';
 import * as CANNON from 'cannon-es'
 
-export default class Player extends Entity  {
+export default class PlayerTest extends Entity  {
 
     geometry: THREE.BoxGeometry
     material: THREE.MeshBasicMaterial
@@ -28,7 +28,7 @@ export default class Player extends Entity  {
 
     update() {
 
-        this.game.camera.lookAt(this.mesh.position)
+        //this.game.camera.lookAt(this.mesh.position)
 
         this.mesh.position.copy(new THREE.Vector3(
             this.body.position.x,
@@ -43,11 +43,11 @@ export default class Player extends Entity  {
             this.body.quaternion.w,
         ))
 
-        if (this.game.joystick) {
+        /*if (this.game.joystick) {
             let angle = Number(this.game.joystick.dataset.radian);
             let force = Number(this.game.joystick.dataset.force);
             this.body.position.x += Math.cos(angle) * force / 100;
-            this.body.position.z -= Math.sin(angle) * force / 100;
-        }  
+            this.body.position.y += Math.sin(angle) * force / 100;
+        }  */
     }
 }
