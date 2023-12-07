@@ -14,7 +14,7 @@ export default class Game {
     joystick: HTMLElement
     entities: Array<Entity>
     world: CANNON.World
-    axesHelper:THREE.AxesHelper
+    axesHelper: THREE.AxesHelper
 
     constructor(_element: HTMLDivElement, _joystick: HTMLElement) {
 
@@ -30,14 +30,14 @@ export default class Game {
 
         this.entities = new Array<Entity>;
 
-        this.world = new CANNON.World({gravity: new CANNON.Vec3(0,-9.82,0)});
+        this.world = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.82, 0) });
         let ground = new CANNON.Body({
             type: CANNON.Body.STATIC,
             shape: new CANNON.Plane()
         })
-        ground.quaternion.setFromEuler( - Math.PI / 2, 0, 0)
-        this.world.addBody(ground); 
-           
+        ground.quaternion.setFromEuler(- Math.PI / 2, 0, 0)
+        this.world.addBody(ground);
+
 
         this.init();
         this.update = this.update.bind(this)
@@ -45,9 +45,9 @@ export default class Game {
 
         this.onWindowResize();
 
-        this.axesHelper = new THREE.AxesHelper( 5 );
-        this.scene.add( this.axesHelper );
-        
+        this.axesHelper = new THREE.AxesHelper(5);
+        this.scene.add(this.axesHelper);
+
     }
 
     init() {
@@ -56,32 +56,32 @@ export default class Game {
         //this.camera.position.y = -10;
         //this.camera.rotateZ(Math.PI);
 
-       
+
         this.entities.push(new Player(this));
         //this.entities.push(new PlayerTest(this));
         //this.entities.push(new TestLight(this));
-        this.entities.push(new Terrain(this)); 
+        this.entities.push(new Terrain(this));
     }
 
     update() {
 
         //this.camera.lookAt(new THREE.Vector3(0,0,0))
 
-        for (let i = 0 ; i < this.entities.length ; i++) {
+        for (let i = 0; i < this.entities.length; i++) {
             this.entities[i].update();
         }
 
-        requestAnimationFrame( this.update );
-        this.renderer.render( this.scene, this.camera);
+        requestAnimationFrame(this.update);
+        this.renderer.render(this.scene, this.camera);
     }
 
-    onWindowResize(){
+    onWindowResize() {
 
         let self = this;
-        window.addEventListener( 'resize', () => {
+        window.addEventListener('resize', () => {
             self.camera.aspect = window.innerWidth / window.innerHeight;
             self.camera.updateProjectionMatrix();
-            self.renderer.setSize( window.innerWidth, window.innerHeight );
-        }, false );
+            self.renderer.setSize(window.innerWidth, window.innerHeight);
+        }, false);
     }
 }
