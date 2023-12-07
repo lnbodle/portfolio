@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 import Player from "./entities/Player"
-import PlayerTest from "./entities/PlayerTest"
 import Entity from './Entity';
 import Terrain from './entities/Terrain';
-import TestLight from './entities/TestLight';
+
 import * as CANNON from 'cannon-es'
 
 export default class Game {
